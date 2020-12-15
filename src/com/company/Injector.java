@@ -10,16 +10,21 @@ public class Injector {
         Class carClass = tClass.getClass();
         Field[] declaredFields = carClass.getDeclaredFields();
         for (Field field : declaredFields) {
+            try {
+
+
             Annotation annotation = field.getAnnotation(AutoInjectable.class);
             if (annotation==null){
                 return;
             } else {
-                String name = getFromProperty(field.getType().getCanonicalName();
-                Class clas=Class.forName(name);
-                System.out.println(getFromProperty(field.getType().getCanonicalName()));
+                String name = getFromProperty(field.getType().getCanonicalName());
+                field.set(tClass, Class.forName(name).getDeclaredConstructor().newInstance());
             }
             //System.out.println(annotation);
             //System.out.println(field.getType().getCanonicalName());
+            } catch (Exception e){
+                System.err.println(e);
+            }
         }
     }
     private String getFromProperty(String name){
