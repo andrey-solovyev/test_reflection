@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.util.Properties;
 
 public class Injector {
-    public <T> T injector(T tClass) {
+    public <T> T inject(T tClass) {
         Class carClass = tClass.getClass();
         Field[] declaredFields = carClass.getDeclaredFields();
         for (Field field : declaredFields) {
@@ -21,8 +21,6 @@ public class Injector {
                 field.setAccessible(true);
                 field.set(tClass, Class.forName(name).getDeclaredConstructor().newInstance());
             }
-            //System.out.println(annotation);
-            //System.out.println(field.getType().getCanonicalName());
             } catch (Exception e){
                 System.err.println(e);
             }
@@ -36,7 +34,7 @@ public class Injector {
         Properties property = new Properties();
 
         try {
-            fis = new FileInputStream("C:\\Users\\andru\\IdeaProjects\\test_reflection\\src\\com\\company\\data.properties");
+            fis = new FileInputStream("path");
             property.load(fis);
 
             output = property.getProperty(name);
